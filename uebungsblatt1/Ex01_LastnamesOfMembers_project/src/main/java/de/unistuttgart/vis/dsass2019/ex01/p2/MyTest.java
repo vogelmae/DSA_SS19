@@ -10,21 +10,36 @@ public class MyTest {
 	public void test() {
 		System.out.println("test, hallo");
 		SpeedList mylist = new SpeedList();
-		mylist.prepend("einz");
-		mylist.prepend("zwei");
-		mylist.prepend("drei");
-		mylist.prepend("vier");
 		
 		System.out.println(mylist.size());
 
 		
-		System.out.println("weiter gehts");
-		mylist.printAll(4);
+		mylist.prepend("einz");
+		mylist.prepend("zwei");
+		mylist.prepend("drei");
+		mylist.prepend("vier");
+		mylist.prepend("fünf");
+		mylist.prepend("sechs");
+		mylist.prepend("sieben");
+		mylist.prepend("acht");
+		mylist.prepend("neun");
+		mylist.prepend("zehn");
 		
+		System.out.println(mylist.size());
+
+				
+		System.out.println();
 		System.out.println(mylist.getElementAt(0));
-		System.out.println(mylist.getElementAt(1));
-		//System.out.println(mylist.getElementAt(2));
-		//System.out.println(mylist.getElementAt(3));
+		System.out.println(mylist.getNext8thElementOf(1));
+		try {
+			System.out.println(mylist.getElementAt(8));
+			System.out.println(mylist.getNext8thElementOf(2));
+		}
+		catch(IndexOutOfBoundsException e) {
+			System.out.println("Exc caught: " + e);
+		}
+		
+		System.out.println("fertig");
 
 
 	}

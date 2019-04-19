@@ -19,71 +19,86 @@ public class SpeedList<T> implements ISpeedList<T> {
 		private Node getNext() {
 			return this.next;
 		}
-		
-		private void setNext(Node n) {
-			this.next = n;
-		}
-		
+
 		private Node getNext8() {
 			return this.next8;
-		}
-		
-		private void setNext8(Node n) {
-			this.next8 = n;
 		}
 		
 		private T getData() {
 			return this.data;
 		}
+
+		private void setNext8(Node n) {
+			this.next8 = n;
+		}
 	}
 	
 	private Node head;
 	
+	//constructor points head to null
 	public SpeedList() {
-		this.head = new Node(null);
+		this.head = null;
 	}
 
 	@Override
 	public int size() {
 		Node iter = this.head;
-		int counter = 1;
-		while (iter.getNext() != null)
+		int counter = 0;
+		
+		//count nodes, stops at the last node, which points to null
+		while (iter != null) {
 			iter = iter.getNext();
 			counter++;
+		}
 		return counter;
 	}
 
 	@Override
 	public void prepend(T t) {
-		Node oldNode = this.head.getNext();
+		Node oldNode = this.head;
 		Node newNode = new Node(t, oldNode);
-		this.head.setNext(newNode);
+		
+		//checks if at least 7 nodes exist and sets the 8th node
+		if (this.size() >= 8) {
+			Node node8 = head;
+			for (int i = 0; i < 7; i++)
+				node8 = node8.getNext();
+			newNode.setNext8(node8);
+		}
+		
+		//point head to new node
+		this.head = newNode;
 	}
 
 	@Override
 	public T getElementAt(int pos) {
 		Node iter = this.head;
-		for (int i = 0; i <= pos; i++) { 
+		
+		//cycles trough the nodes, till node at @param pos
+		for (int i = 0; i < pos; i++) { 
 			iter = iter.getNext();
-			//if (iter == null)
-			 //TODO trow expeiton
+			if (iter == null)
+				throw new IndexOutOfBoundsException();
 		}
 		return iter.getData();
 	}
 
 	@Override
 	public T getNext8thElementOf(int pos) {
-		// TODO Auto-generated method stub
-		return null;
+		Node iter = this.head;
+		
+		//cycles trough the nodes, till node at @param pos
+		for (int i = 0; i < pos; i++) { 
+			iter = iter.getNext();
+			if (iter == null)
+				throw new IndexOutOfBoundsException();
+		}
+		
+		//checks if 8th next node exist
+		if (iter.getNext8() == null)
+			throw new IndexOutOfBoundsException();
+		else
+			return iter.getNext8().getData();
 	}
 	
-	//TODO remove:
-	public void printAll(int a) {
-		Node iter = this.head;
-		for (int i = 0; i < a; i++) {
-			System.out.println(iter.getData());
-			iter = iter.getNext();
-		}
-	}
-
 }
